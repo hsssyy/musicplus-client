@@ -95,3 +95,8 @@ export const getAllComment = (type,id) =>{
         return get(`/comment/commentOfSongListId?songListId=${id}`);
     }
 }
+
+
+//==================== VIP 用户=============
+//用户开通VIP
+export const addVip = (params) =>post(`/vip/add`,params);
