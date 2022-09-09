@@ -182,7 +182,7 @@ export default {
                 let params = new URLSearchParams();
                 // 开通会员时间
                 let nowTime = new Date();
-                let y = nowTime.getFullYear();  //年
+                let y = nowTime.getFullYear();  //年yyyy
                 let m = nowTime.getMonth() + 1; //月
                 m = m < 10 ? '0' + m : m;
                 let d = nowTime.getDate();      //日
