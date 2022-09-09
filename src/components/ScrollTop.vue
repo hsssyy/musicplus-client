@@ -7,7 +7,7 @@
 export default {
   name: "scroll-top",
   methods: {
-    returnTop() {
+    returnTop() {  //返回顶部 有的浏览器用documentElement，有的用body
       document.documentElement.scrollTop = document.body.scrollTop = 0;
     },
   },

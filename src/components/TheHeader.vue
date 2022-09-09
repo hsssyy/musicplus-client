@@ -7,6 +7,8 @@
       <span>music</span>
     </div>
     <ul class="navbar">
+      <!-- 循环遍历导航栏navMsg 放到data里面 -->
+      <!-- 判断item.name是否等于mapGetters监控的activeName，是的话active类就有效 -->
       <li
         :class="{ active: item.name == activeName }"
         v-for="item in navMsg"
@@ -44,7 +46,7 @@
       <div id="user">
         <img :src="attachImageUrl(avator)" />
       </div>
-      <div>{{username}}</div>
+      <div class="user-name">{{username}}</div>
       <ul class="menu">
         <li
           v-for="(item, index) in menuList"
@@ -59,7 +61,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex"; // mapGetters从整个工程其他地方获取数据
 import { navMsg, loginMsg, menuList } from "../assets/data/header";
 export default {
   name: "the-header",
@@ -71,11 +73,11 @@ export default {
       menuList: [], //用户下拉菜单
     };
   },
-  computed: {
-    ...mapGetters(["activeName", "loginIn", "avator","username"]),
+  computed: { // 监控数据的获取
+    ...mapGetters(["activeName", "loginIn", "avator","username"]), //监控到的"activeName", "loginIn", "avator"可以当做该页面的数据（和data里相同）
   },
 
-  created() {
+  created() { // 当创建时加载
     this.navMsg = navMsg;
     this.loginMsg = loginMsg;
     this.menuList = menuList;
@@ -113,10 +115,11 @@ export default {
             })
         },
     goHome() {
+      // push 后面可以是对象，也可以是字符串（这里是对象query相当与发送了一次get请求，请求参数会显示在浏览器地址栏中）
       this.$router.push({ path: "/" });
     },
     goPage(path, name) {
-      if(!this.loginIn && path=='/my-music'){
+      if(!this.loginIn && path=='/my-music'||(!this.loginIn && path=='/vip')){
         this.notify("请先登录",'warning')
       }else{
         this.$store.commit("setActiveName", name);
@@ -138,6 +141,7 @@ export default {
     },
     goMenuList(path) {
       if (path == 0) {
+        this.$router.push({ path: "/" });
         this.$store.commit("setLoginIn", false);
         this.$store.commit("setIsActive", false);
         this.$router.go(0);

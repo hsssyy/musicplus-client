@@ -15,11 +15,15 @@
       </li>
       <li v-for="(item, index) in songList" :key="index">
         <div class="song-item" @click="toplay(item.id, item.url, item.pic, index, item.name, item.lyric)">
+          <!-- 序号 -->
           <span class="item-index">
             {{ index + 1 }}
           </span>
+          <!-- 歌曲名 -->
           <span class="item-title">{{ replaceLName(item.name) }}</span>
+          <!-- 歌手 -->
           <span class="item-name">{{ replaceFName(item.name) }}</span>
+          <!-- 专辑 -->
           <span class="item-intro">{{ item.introduction }}</span>
         </div>
       </li>
@@ -32,7 +36,7 @@ import { mixin } from "../mixins";
 export default {
   name: "album-content",
   mixins: [mixin],
-  props: ["songList"],
+  props: ["songList"], //获取传过来的songList
 };
 </script>
 <style lang="scss" scoped>

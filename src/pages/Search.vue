@@ -1,6 +1,7 @@
 <template>
   <div class="search">
     <nav class="searchList-nav" ref="change">
+      <!-- 判断toggle(在点击函数里获得)是否等于'Songs'(当前页面) -->
       <span :class="{ isActive: toggle == 'Songs' }" @click="handleChangeView('Songs')" >歌曲</span>
       <span :class="{ isActive: toggle == 'SongLists' }" @click="handleChangeView('SongLists')">歌单</span>
     </nav>
@@ -20,8 +21,8 @@ export default {
   },
   data() {
     return {
-      toggle: "Songs",
-      currentView: "searchSongs",
+      toggle: "Songs", // 默认歌曲页面
+      currentView: "searchSongs", //当前页面默认searchSongs页面
     };
   },
   methods: {

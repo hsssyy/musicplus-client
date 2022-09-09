@@ -5,6 +5,7 @@
       <div class="section-title">
         {{ item.name }}
       </div>
+      <!-- 把item.list赋值给contentList子组件 -->
       <content-list :contentList="item.list"></content-list>
     </div>
   </div>
@@ -28,14 +29,14 @@ export default {
       ],
     };
   },
-  created() {
+  created() { // 页面创建的时候执行下面两个函数
     this.getSongList(), this.getSinger();
   },
   methods: {
     getSongList() {
       //获取歌单
       getAllSongList()
-        .then((res) => {
+        .then((res) => { // songsList[0]歌单
           this.songsList[0].list = res;
         })
         .catch((err) => {
@@ -45,7 +46,7 @@ export default {
     getSinger() {
       //获取歌手
       getAllSinger()
-        .then((res) => {
+        .then((res) => { // songsList[1]歌手
           this.songsList[1].list = res;
         })
         .catch((err) => {
