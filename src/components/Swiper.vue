@@ -1,7 +1,7 @@
 <template>
   <div class="swiper">
     <el-carousel :interval="4000" type="card" height="280px">
-      <!-- v-for遍历swiperList 取出来的每项数据是item,索引index;在v-bind后，就可以动态获取数据 -->
+      <!-- v-for遍历swiperList  取出来的每项数据是item,索引index;在v-bind后，就可以动态获取数据 -->
       <el-carousel-item v-for="(item, index) in swiperList" :key="index">
         <img :src="item.picImg" />
       </el-carousel-item>

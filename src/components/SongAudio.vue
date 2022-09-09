@@ -17,7 +17,7 @@
     name: "song-audio",
     computed: {
       ...mapGetters([
-        "id", //歌曲id
+        "id", // 歌曲id
         "url", //歌曲地址
         "isPlay", //播放状态
         "listOfSongs", //当前歌曲列表

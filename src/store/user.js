@@ -1,9 +1,9 @@
 const user = ({
     state: {
-        userId: '', //用户id
-        username: '', //用户账号
-        avator: '', //用户头像
-        duedate: '', //会员到期时间
+        userId: '', // 用户id
+        username: '', // 用户账号
+        avator: '', // 用户头像
+        duedate: '', // 会员到期时间
     },
     getters: {
         userId: state => {

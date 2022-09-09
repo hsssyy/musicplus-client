@@ -1,10 +1,10 @@
 const configure = ({
     state: {
-        HOST: 'http://127.0.0.1:8888', //后台访问地址根目录
-        activeName: '', //当前选中的菜单名
-        showAside: false, //是否显示播放中的歌曲列表 TheAside.vue 组件
-        loginIn: false, //用户是否已登录
-        isActive: false, //当前歌曲是否已收藏
+        HOST: 'http://127.0.0.1:8888', // 后台访问地址根目录
+        activeName: '', // 当前选中的菜单名
+        showAside: false, // 是否显示播放中的歌曲列表 TheAside.vue 组件
+        loginIn: false, // 用户是否已登录
+        isActive: false, // 当前歌曲是否已收藏
         // isMealActive: false,
         // isPayActive: false,
     },
