@@ -30,9 +30,9 @@
     },
     data(){
       return {
-        avator: '',//用户的头像
+        avator: '',  //用户的头像
         username: '',//昵称
-        duedate: '',  //会员到期时间
+        duedate: '', //会员到期时间
       }
     },
     computed:{

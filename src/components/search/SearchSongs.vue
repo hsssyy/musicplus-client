@@ -1,4 +1,4 @@
-<!-- SearchSongs用来调用，AlbumContent作显示 -->
+<!-- SearchSongs用来调用， AlbumContent作显示 -->
 <template>
   <div class="search-songs">
     <album-content :songList="listOfSongs"></album-content>

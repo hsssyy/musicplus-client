@@ -13,7 +13,7 @@ import '@/assets/js/iconfont3.js'
 
 Vue.use(ElementUI)
 
-/*关闭生产模式下给出的提示*/
+/* 关闭生产模式下给出的提示 */
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
