@@ -36,7 +36,7 @@ import { mixin } from "../mixins";
 export default {
   name: "album-content",
   mixins: [mixin],
-  props: ["songList"], //获取传过来的songList
+  props: ["songList"], // 获取传过来的songList
 };
 </script>
 <style lang="scss" scoped>

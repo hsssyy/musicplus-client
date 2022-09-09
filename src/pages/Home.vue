@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     getSongList() {
-      //获取歌单
+      // 获取歌单
       getAllSongList()
         .then((res) => { // songsList[0]歌单
           this.songsList[0].list = res;

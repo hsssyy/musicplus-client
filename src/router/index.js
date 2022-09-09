@@ -12,7 +12,7 @@ import SingerAlbum from '@/pages/SingerAlbum'
 import SongListAlbum from '@/pages/SongListAlbum'
 import Setting from '@/pages/Setting'
 import MyMusic from '@/pages/MyMusic'
-Vue.use(Router) /*使用路由依赖*/
+Vue.use(Router) /* 使用路由依赖 */
 
 export default new Router({
     routes: [{

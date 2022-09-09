@@ -5,7 +5,7 @@
       <span :class="{ isActive: toggle == 'Songs' }" @click="handleChangeView('Songs')" >歌曲</span>
       <span :class="{ isActive: toggle == 'SongLists' }" @click="handleChangeView('SongLists')">歌单</span>
     </nav>
-    <!--切换组件 -->
+    <!-- 切换组件 -->
     <component :is="currentView"> </component>
   </div>
 </template>

@@ -32,7 +32,7 @@ export default {
   name: "the-aside",
   computed: {
     ...mapGetters([
-      "showAside", //是否显示播放中的歌曲列表
+      "showAside", // 是否显示播放中的歌曲列表
       "listOfSongs", //当前歌曲列表
       "id", //播放中的音乐id
       'loginIn',//用户是否已登录

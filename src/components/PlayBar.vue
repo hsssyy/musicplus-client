@@ -110,10 +110,10 @@ export default {
       songTime: "00:00", //当前歌曲总时间
       curLength: 0, // 进度条的位置
       progressLength: 0, // 进度条的总长度
-      mouseStartX: 0, //拖拽开始位置
-      tag: false, //拖拽开始结束的标志，当开始拖拽，它的值就会变成true
-      volume: 20, //音量默认一半
-      toggle: true, //显示隐藏播放页面
+      mouseStartX: 0, // 拖拽开始位置
+      tag: false, // 拖拽开始结束的标志，当开始拖拽，它的值就会变成true
+      volume: 20, // 音量默认一半
+      toggle: true, // 显示隐藏播放页面
     };
   },
   computed: {

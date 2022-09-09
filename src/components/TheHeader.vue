@@ -67,7 +67,7 @@ export default {
   name: "the-header",
   data() {
     return {
-      navMsg: [], //左侧导航栏
+      navMsg: [],   //左侧导航栏
       keywords: "", //搜索关键字
       loginMsg: [], //右侧导航栏
       menuList: [], //用户下拉菜单
