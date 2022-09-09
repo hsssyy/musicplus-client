@@ -46,16 +46,16 @@
       //获取链接后准备播放
       startPlay() {
         let player = this.$refs.player;
-        this.$store.commit("setDuration", player.duration);
+        this.$store.commit("setDuration", player.duration);  // 获取播放时长
         //开始播放
         player.play();
-        this.$store.commit("setIsPlay", true);
+        this.$store.commit("setIsPlay", true); // 播放状态改为true
       },
       //播放完成之后触发
       ended() {
-        this.$store.commit("setIsPlay", false);
-        this.$store.commit("setCurTime", 0);
-        this.$store.commit("setAutoNext", !this.autoNext);
+        this.$store.commit("setIsPlay", false); // 播放状态改为false
+        this.$store.commit("setCurTime", 0); // 播放完之后时间设置为0
+        this.$store.commit("setAutoNext", !this.autoNext); //实现连续播放
       },
       //开始，暂停
       toggleplay() {

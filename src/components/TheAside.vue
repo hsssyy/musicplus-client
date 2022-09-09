@@ -1,3 +1,4 @@
+<!-- 点击底部播放音乐控件显示的歌单 -->
 <template>
   <transition name="slide-fade">
     <div class="the-aside" v-if="showAside">

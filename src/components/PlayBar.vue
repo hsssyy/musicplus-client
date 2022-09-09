@@ -161,6 +161,7 @@ export default {
   },
   mounted() {
     this.progressLength = this.$refs.progress.getBoundingClientRect().width;
+    // 显示音量条控件
     document.querySelector(".item-volume").addEventListener(
       "click",
       function (e) {
@@ -169,6 +170,7 @@ export default {
       },
       false
     );
+    // 点击音量条时阻止冒泡（阻止向父控件操作）
     document.querySelector(".volume").addEventListener(
       "click",
       function (e) {
@@ -176,6 +178,7 @@ export default {
       },
       false
     );
+    // 点击页面中其他地方音量条消失
     document.addEventListener(
       "click",
       function (e) {
@@ -244,22 +247,22 @@ export default {
     },
     //拖拽中
     mousemove(e) {
-      if (!this.duration) {
+      if (!this.duration) { // 不能存在歌曲播放
         return false;
       }
-      if (this.tag) {
+      if (this.tag) { //拖拽开始的时候tag变为true
         let movementX = e.clientX - this.mouseStartX; // 点点移动的距离
         let curLength = this.$refs.curProgress.getBoundingClientRect().width;
         let newPercent = ((movementX + curLength) / this.progressLength) * 100;
         if (newPercent > 100) {
           newPercent = 100;
         }
-        this.curLength = newPercent;
-        this.mouseStartX = e.clientX;
-        this.changeTime(newPercent);
+        this.curLength = newPercent; // 让当前位置百分比=移动到的位置百分比
+        this.mouseStartX = e.clientX; //小圆点位置
+        this.changeTime(newPercent); //改变歌曲播放的时间
       }
     },
-    //更改歌曲进度
+    //更改歌曲进度（时间）
     changeTime(percent) {
       let newCurTime = percent * 0.01 * this.duration;
       this.$store.commit("setChangeTime", newCurTime);

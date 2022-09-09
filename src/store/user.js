@@ -2,7 +2,8 @@ const user = ({
     state: {
         userId: '', //用户id
         username: '', //用户账号
-        avator: '',//用户头像
+        avator: '', //用户头像
+        duedate: '', //会员到期时间
     },
     getters: {
         userId: state => {
@@ -26,6 +27,13 @@ const user = ({
             }
             return avator
         },
+        duedate: state => {
+            let duedate = state.duedate
+            if (!duedate) {
+                duedate = JSON.parse(window.sessionStorage.getItem('duedate'))
+            }
+            return duedate
+        },
     },
     mutations: {
         setUserId: (state, userId) => {
@@ -40,7 +48,10 @@ const user = ({
             state.avator = avator
             window.sessionStorage.setItem('avator', JSON.stringify(avator))
         },
-
+        setDuedate: (state, duedate) => {
+            state.duedate = duedate
+            window.sessionStorage.setItem('duedate', JSON.stringify(duedate))
+        },
     }
 })
 export default user

@@ -1,0 +1,164 @@
+@import "var.scss";
+@import "global.scss";
+.content {
+    background-color: #f7f6f6;
+    border-radius: $border-radius-songlist;
+    padding: 20px 20px;
+    min-width: 700px;
+    margin-top: -39px;
+    user-select: none;
+    .often-content {
+        color: $color-grey;
+        text-align: center;
+        hr {
+            margin-top: 8px;
+        }
+    }
+}
+
+.often-package {
+    margin-top: 8px;
+    li {
+        display: block;
+        position: relative;
+        float: left;
+        width: 250px;
+        height: 260px;
+        margin-right: 5px;
+        border-radius: 5%;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px 0 #d3d6d380;
+        background-color: #fafafa;
+        p {
+            display: none;
+        }
+        div {
+            font-size: 16px;
+            font-weight: 400;
+            color: #9b9fa3;
+            div {
+                display: inline-block;
+                color: $color-grey;
+                padding-top: 40px;
+                font-size: 50px;
+            }
+            span {
+                display: inline-block;
+                color: $color-grey;
+                padding-top: 6px;
+                font-size: 30px;
+            }
+        }
+        hr {
+            margin-left: 25px;
+            width: 200px;
+        }
+        .month-select {
+            width: 250px;
+            height: 55px;
+            margin-top: -1px;
+            border-top: 1px solid #e5e5e5;
+            border-bottom: 1px solid #e5e5e5;
+            span {
+                width: 75px;
+                height: 49px;
+                line-height: 40px;
+                text-align: center;
+                background-color: #f3f3f3;
+                cursor: pointer;
+            }
+            .month-sub {
+                float: left;
+                font-size: 50px;
+                font-weight: 130;
+                border-right: 1px solid #e5e5e5;
+            }
+            .month-add {
+                float: right;
+                font-size: 38px;
+                font-weight: 200;
+                border-left: 1px solid #e5e5e5;
+            }
+            .month {
+                width: 98px;
+                font-size: 30px;
+                font-weight: 400;
+                color: $color-grey;
+                background-color: #fafafa;
+            }
+        }
+        &:hover {
+            border: 1px solid $color-blue-light;
+        }
+    }
+}
+
+.pay {
+    display: inline-block;
+    width: 1035px;
+    height: 150px;
+    margin-left: 53px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: #fafafa;
+    box-shadow: 0 0 10px 0 #d3d6d380;
+    p {
+        display: none;
+    }
+    .pay-way li {
+        display: inline-block;
+        position: relative;
+        width: 200px;
+        height: 55px;
+        margin-top: 30px;
+        margin-right: 10px;
+        font-size: 20px;
+        line-height: 55px;
+        text-align: center;
+        border: 1px solid #ccc;
+        &:hover {
+            border: 1px solid $color-blue-light;
+        }
+    }
+    .pay-btn {
+        margin-top: 13px;
+        background-color: $color-blue-light !important;
+    }
+}
+
+.sel-active {
+    border: 2px solid $color-blue-light !important;
+    p {
+        display: block !important;
+        position: absolute;
+        float: right;
+        width: 25px;
+        height: 25px;
+        border-radius: 0 11px;
+        top: -1px;
+        right: -1px;
+        background-color: $color-blue-light;
+        color: $color-white;
+        font-size: 20px;
+        font-weight: 800;
+    }
+}
+
+.cek-active {
+    border: 2px solid $color-blue-light !important;
+    p {
+        display: block !important;
+        position: absolute;
+        float: right;
+        width: 28px;
+        height: 22px;
+        border-radius: 0 0 0 10px;
+        top: -2px;
+        right: -1px;
+        background-color: #2aa3ef;
+        color: #fff;
+        font-size: 17px;
+        font-weight: 800;
+        line-height: 25px;
+    }
+}
