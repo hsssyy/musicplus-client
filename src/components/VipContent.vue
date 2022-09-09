@@ -2,7 +2,7 @@
     <div class="content">
       <div class="often-content">
         <ul class="often-package">
-            <li @click="isMealActive">
+            <li @click="isMealActive('1')">
                 <p>√</p>
                 <div style="pointer-events: none">
                     <div>{{total1}} </div> 元<br/>
@@ -15,7 +15,7 @@
                     <span class="month-add" style="pointer-events: auto" @click="monthAdd">+</span>
                 </div>
             </li>
-            <li @click="isMealActive">
+            <li @click="isMealActive('2')">
                 <p>√</p>
                 <div style="pointer-events: none">
                     <div>{{total2}} </div> 元<br/>
@@ -24,7 +24,7 @@
                     <span >{{months2}}个月</span>
                 </div>
             </li>
-            <li @click="isMealActive">
+            <li @click="isMealActive('3')">
                 <p>√</p>
                 <div style="pointer-events: none">
                     <div>{{total3}} </div> 元<br/>
@@ -33,7 +33,7 @@
                     <span >{{months3}}个月</span>
                 </div>
             </li>
-            <li @click="isMealActive">
+            <li @click="isMealActive('4')">
                 <p>√</p>
                 <div style="pointer-events: none">
                     <div>{{total4}} </div> 元<br/>
@@ -62,25 +62,39 @@
   </template>
   <script>
 import { mixin } from "../mixins";
+import {mapGetters} from 'vuex';
+import {setVip} from '../api/index';
 export default {
     name: "vip-content",
+    mixins: [mixin],
+    computed:{
+        ...mapGetters([
+            'userId', //当前登录用户id
+        ])
+    },
+    /* 套餐一：可选择月数，最高12个月---金额随月数变化---15元/月
+       套餐二：3个月---金额45元---15元/月
+       套餐三：6个月---金额90元---15元/月
+       套餐四：12个月---金额168元---14元/月
+    */
     data(){
         return {
-            flag1: '',   //判断是否选中
-            flag2: '',
-            months1: '1',//套餐一 加减选择月数 
-            months2: '3',//套餐二 月数
-            months3: '6',//套餐三 月数
-            months4: '12',//套餐四 月数
-            total1:'15', //套餐一总额
-            total2:'45', //套餐二总额
-            total3:'90', //套餐三总额
-            total4:'168', //套餐一四总额
+            flag1: '',       //判断是否选中套餐
+            flag2: '',       //判断是否选中支付方式
+            months1: '1',    //套餐一 加减选择月数 
+            months2: '3',    //套餐二 月数
+            months3: '6',    //套餐三 月数
+            months4: '12',   //套餐四 月数
+            total1:'15',     //套餐一 总额
+            total2:'45',     //套餐二 金额
+            total3:'90',     //套餐三 金额
+            total4:'168',    //套餐四 金额
+            selectMonth: '', //选择的月数，默认空
+            payAmount: '',   //付款金额，默认空
         }
     },
-    mixins: [mixin],    
     mounted() {
-        // 点击套餐显示选中边框 1
+        // 点击套餐显示选中边框
         var lis1 = document.querySelector(".often-package").childNodes;
         for (var i = 0; i < lis1.length; i++) {
             lis1[i].addEventListener("click", function (e) {
@@ -111,14 +125,33 @@ export default {
                 type: type
             })
         },
-        isMealActive(e) {
+        isMealActive(val) {
+            if (val == 1){ // 选择的是套餐一
+                this.selectMonth = this.months1; // 开通的月数
+                this.payAmount = this.total1; // 支付总金额
+                // console.log(this.selectMonth);
+                // console.log(this.payAmount);
+            } else if (val == 2) { // 套餐二
+                this.selectMonth = this.months2;
+                this.payAmount = this.total2;
+                // console.log(this.selectMonth);
+                // console.log(this.payAmount);
+            } else if (val == 3) { // 套餐三
+                this.selectMonth = this.months3;
+                this.payAmount = this.total3;
+                // console.log(this.selectMonth);
+                // console.log(this.payAmount);
+            } else if (val == 4) { // 套餐四
+                this.selectMonth = this.months4;
+                this.payAmount = this.total4;
+                // console.log(this.selectMonth);
+                // console.log(this.payAmount);
+            }
             this.flag1 = true;
-            console.log(e.target);
-            e.stopPropagation();
+            // e.stopPropagation();
         },
         isPayActive(e) {
             this.flag2 = true;
-            console.log(e.target);
             e.stopPropagation();
         },
         monthSub(e) {
@@ -141,10 +174,41 @@ export default {
             }
             e.stopPropagation();
         },
-        confirmPay(e) {
+        confirmPay(e) { // 确认支付
             e.stopPropagation();
+
+            // 开通提示信息
             if (this.flag1 && this.flag2) {
-                this.notify("开通会员成功",'success');
+                let params = new URLSearchParams();
+                // 开通会员时间
+                let nowTime = new Date();
+                let y = nowTime.getFullYear();  //年yyyy
+                let m = nowTime.getMonth() + 1; //月
+                m = m < 10 ? '0' + m : m;
+                let d = nowTime.getDate();      //日
+                d = d < 10 ? '0' + d : d;
+                let openTime = y + '-' + m + '-' + d; //开通时间 yyyy-mm-dd
+                params.append('userId', this.userId);           //用户id
+                params.append('selectMonth', this.selectMonth); //开通的月数
+                params.append('payAmount', this.payAmount);     //支付金额
+                params.append('openTime', openTime);            //开通时间
+                // console.log(this.userId);
+                // console.log(this.selectMonth);
+                // console.log(this.payAmount);
+                // console.log(openTime);
+                setVip(params)
+                    .then(res =>{
+                        if(res.code==1){
+                            this.notify("开通会员成功",'success')
+                            // 页面到期时间更新 
+                        }else{
+                            this.notify("开通会员失败",'error')
+                        }
+                    })
+                    .catch(err =>{
+                        this.notify("开通会员失败",'error')
+                    })
+                // this.notify("开通会员成功",'success');
             } else if ((this.flag1 == false) && this.flag2) {
                 this.notify("请选择套餐",'warning');
             } else if (this.flag1 && (this.flag2 == false)) {
