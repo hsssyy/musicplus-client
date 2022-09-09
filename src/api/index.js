@@ -1,17 +1,17 @@
 import Axios from "axios";
-import { get, post } from "./http";
+import {get, post } from "./http";
 
 
 
 //============歌手相关===========
 
 //查询前十个歌手  用在首页
-export const getAllSinger  = (params) => get(`/singer/allSingerSelect`, params);
+export const getAllSinger = (params) => get(`/singer/allSingerSelect`, params);
 //查询全部歌手  以及分页 用在歌手页
-export const getAllSingerPage  = (pn) => get(`/singer/allSinger?pn=${pn}`);
+export const getAllSingerPage = (pn) => get(`/singer/allSinger?pn=${pn}`);
 
 //根据性别查询歌手  
-export const getSingerOfSex =  (sex) => get(`singer/singerOfSex?sex=${sex}`);
+export const getSingerOfSex = (sex) => get(`singer/singerOfSex?sex=${sex}`);
 
 //下载音乐 
 export const download = (url) => Axios({
@@ -37,10 +37,10 @@ export const songOfSongId = (id) => get(`song/songBySongId?songId=${id}`);
 //============歌单相关===========
 
 //查询前十个歌单  用在首页
-export const getAllSongList  = (params) => get(`/songList/allSongListSelect`, params);
+export const getAllSongList = (params) => get(`/songList/allSongListSelect`, params);
 
 //查询全部歌单，用在歌单页 以及分页
-export const getAllSongListPage  = (pn) => get(`/songList/all?pn=${pn}`);
+export const getAllSongListPage = (pn) => get(`/songList/all?pn=${pn}`);
 
 //模糊查询 歌单标题包含文字的 歌单
 export const getSongListOfLikeTitle = (keywords) => get(`songList/likeTitle?title=${keywords}`);
@@ -60,7 +60,7 @@ export const SignUp = (params) => post(`/consumer/add`, params);
 
 //登录 
 export const loginIn = (consumer) => post(`/consumer/login`, consumer);
- 
+
 //根据用户id查询用户详细信息  
 export const getUserOfId = (id) => get(`/consumer/selectByPrimaryKey?id=${id}`);
 //更新用户信息  
@@ -69,7 +69,7 @@ export const updateUserMsg = (params) => post(`/consumer/update`, params);
 //============收藏=============
 
 //新增收藏   还没实现
-export const setCollect = (params) =>post(`/collect/add`,params);
+export const setCollect = (params) => post(`/collect/add`, params);
 
 //指定用户的收藏列表 
 export const getCollectOfUserId = (userId) => get(`/collect/collectOfUserId?userId=${userId}`);
@@ -84,14 +84,18 @@ export const getRankOfSongListId = (songListId) => get(`/rank?songListId=${songL
 
 //========================评论  ============
 //提交评论 
-export const setComment = (params) =>post(`/comment/add`,params);
+export const setComment = (params) => post(`/comment/add`, params);
 //点赞 
-export const setLike = (params) =>post(`/comment/like`,params);
+export const setLike = (params) => post(`/comment/like`, params);
 //返回当前歌单或歌曲的评论列表
-export const getAllComment = (type,id) =>{
-    if(type==0){//歌曲
+export const getAllComment = (type, id) => {
+    if (type == 0) { //歌曲
         return get(`/comment/commentOfSongId?songId=${id}`);
-    }else{//歌单
+    } else { //歌单
         return get(`/comment/commentOfSongListId?songListId=${id}`);
     }
 }
+
+// ====================开通会员======================
+// 提交开通会员信息
+export const setVip = (params) => post(`/`, params);
