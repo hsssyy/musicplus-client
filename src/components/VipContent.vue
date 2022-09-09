@@ -80,7 +80,7 @@ export default {
     },
     mixins: [mixin],    
     mounted() {
-        // 点击套餐显示选中边框
+        // 点击套餐显示选中边框 1
         var lis1 = document.querySelector(".often-package").childNodes;
         for (var i = 0; i < lis1.length; i++) {
             lis1[i].addEventListener("click", function (e) {
