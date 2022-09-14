@@ -96,13 +96,9 @@ export const getAllComment = (type, id) => {
     }
 }
 
-<<<<<<< HEAD
 
-//==================== VIP 用户=============
-//用户开通VIP
-export const addVip = (params) =>post(`/vip/add`,params);
-=======
 // ====================开通会员======================
 // 提交开通会员信息
-export const setVip = (params) => post(`/`, params);
->>>>>>> b315b49fb1792db855e8a33a6aebd76db8ffdea4
+
+export const setVip = (params) => post(`/vip/add`, params);
+

@@ -65,6 +65,7 @@
         <!-- 音量 -->
         <div class="item item-volume">
           <svg v-if="volume == 0" class="icon">
+            <!-- 音量为零显示静音图标 -->
             <use xlink:href="#icon-yinliangjingyinheix"></use>
           </svg>
           <svg v-else class="icon">
@@ -112,7 +113,7 @@ export default {
       progressLength: 0, // 进度条的总长度
       mouseStartX: 0, // 拖拽开始位置
       tag: false, // 拖拽开始结束的标志，当开始拖拽，它的值就会变成true
-      volume: 20, // 音量默认一半
+      volume: 20, // 音量默认20
       toggle: true, // 显示隐藏播放页面
     };
   },
@@ -136,7 +137,7 @@ export default {
       'isActive',//当前播放的歌曲是否已收藏
     ]),
   },
-  watch: {
+  watch: { //监控值的变化（也可以写到methods里面）
     //切换播放状态的图标
     isPlay() {
       if (this.isPlay) {
@@ -160,7 +161,8 @@ export default {
     },
   },
   mounted() {
-    this.progressLength = this.$refs.progress.getBoundingClientRect().width;
+    // 返回进度条的宽度
+    this.progressLength = this.$refs.progress.getBoundingClientRect().width; // 该方法返回元素的大小及其相对于视口的位
     // 显示音量条控件
     document.querySelector(".item-volume").addEventListener(
       "click",
@@ -252,8 +254,8 @@ export default {
       }
       if (this.tag) { //拖拽开始的时候tag变为true
         let movementX = e.clientX - this.mouseStartX; // 点点移动的距离
-        let curLength = this.$refs.curProgress.getBoundingClientRect().width;
-        let newPercent = ((movementX + curLength) / this.progressLength) * 100;
+        let curLength = this.$refs.curProgress.getBoundingClientRect().width; // 点点开始移动时 深蓝色进度条的宽度
+        let newPercent = ((movementX + curLength) / this.progressLength) * 100; // 最终进度条长度百分比
         if (newPercent > 100) {
           newPercent = 100;
         }

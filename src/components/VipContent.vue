@@ -64,6 +64,7 @@
 import { mixin } from "../mixins";
 import {mapGetters} from 'vuex';
 import {setVip} from '../api/index';
+import {getUserOfId} from '../api/index';
 export default {
     name: "vip-content",
     mixins: [mixin],
@@ -91,6 +92,7 @@ export default {
             total4:'168',    //套餐四 金额
             selectMonth: '', //选择的月数，默认空
             payAmount: '',   //付款金额，默认空
+            duedate: '',     //会员到期时间
         }
     },
     mounted() {
@@ -129,23 +131,15 @@ export default {
             if (val == 1){ // 选择的是套餐一
                 this.selectMonth = this.months1; // 开通的月数
                 this.payAmount = this.total1; // 支付总金额
-                // console.log(this.selectMonth);
-                // console.log(this.payAmount);
             } else if (val == 2) { // 套餐二
                 this.selectMonth = this.months2;
                 this.payAmount = this.total2;
-                // console.log(this.selectMonth);
-                // console.log(this.payAmount);
             } else if (val == 3) { // 套餐三
                 this.selectMonth = this.months3;
                 this.payAmount = this.total3;
-                // console.log(this.selectMonth);
-                // console.log(this.payAmount);
             } else if (val == 4) { // 套餐四
                 this.selectMonth = this.months4;
                 this.payAmount = this.total4;
-                // console.log(this.selectMonth);
-                // console.log(this.payAmount);
             }
             this.flag1 = true;
             // e.stopPropagation();
@@ -176,31 +170,53 @@ export default {
         },
         confirmPay(e) { // 确认支付
             e.stopPropagation();
-
-            // 开通提示信息
-            if (this.flag1 && this.flag2) {
+            if (this.flag1 && this.flag2) { //套餐与支付方都选择了
+                // ----------根据用户id查询到期时间duedate----------
+                getUserOfId(this.userId)
+                    .then(res => {
+                        this.duedate = res.duedate;
+                    })
+                    .catch( err=> {
+                        this.notify("出错了","error");
+                    })
+                //--------------开通会员时间 yyyy-mm-dd--------------
+                let nowTime = new Date();        // 当前系统时间
+                let y1 = nowTime.getFullYear();  //年
+                let m1 = nowTime.getMonth() + 1; //月
+                m1 = m1 < 10 ? '0' + m1 : m1;
+                let d1 = nowTime.getDate();      //日
+                d1 = d1 < 10 ? '0' + d1 : d1;
+                let openTime = y1 + '-' + m1 + '-' + d1;
+                //----------------计算到期时间-----------------------
+                var dueMs = +new Date(this.duedate);     // 到期时间转化为毫秒数  dueMs
+                let timeMs = +new Date();                // 开通会员时间的总毫秒数 timeMs
+                let monMs = this.selectMonth * 31 * 24 * 60 * 60 * 1000; //月数*31天*24小时*60分钟*60秒*1000毫秒
+                if (!dueMs || dueMs < timeMs) { // 到期时间为空 或者 到期时间小于开通时间（用毫秒判断）
+                    // 到期时间 = 开通时间+开通的月数（用毫秒计算）
+                    dueMs = timeMs + monMs;
+                } else if (dueMs >= timeMs) { // 到期时间 大于等于 开通会员时间 
+                    // 到期时间 = 数据库获取到的到期时间+开通的月数（用毫秒计算）
+                    dueMs = dueMs + monMs;
+                }
+                //----------到期时间转化为年月日格式yyyy-mm-dd---------
+                let due = new Date(dueMs);
+                let y2 = due.getFullYear();  //年
+                let m2 = due.getMonth() + 1; //月
+                m2 = m2 < 10 ? '0' + m2 : m2;
+                let d2 = due.getDate();      //日
+                d2 = d2 < 10 ? '0' + d2 : d2;
+                this.duedate = y2 + '-' + m2 + '-' + d2;
+                // -----------------------------------------------
                 let params = new URLSearchParams();
-                // 开通会员时间
-                let nowTime = new Date();
-                let y = nowTime.getFullYear();  //年
-                let m = nowTime.getMonth() + 1; //月
-                m = m < 10 ? '0' + m : m;
-                let d = nowTime.getDate();      //日
-                d = d < 10 ? '0' + d : d;
-                let openTime = y + '-' + m + '-' + d; //开通时间 yyyy-mm-dd
                 params.append('userId', this.userId);           //用户id
                 params.append('selectMonth', this.selectMonth); //开通的月数
                 params.append('payAmount', this.payAmount);     //支付金额
                 params.append('openTime', openTime);            //开通时间
-                // console.log(this.userId);
-                // console.log(this.selectMonth);
-                // console.log(this.payAmount);
-                // console.log(openTime);
+                params.append('duedate', this.duedate);         //到期时间
                 setVip(params)
                     .then(res =>{
                         if(res.code==1){
                             this.notify("开通会员成功",'success')
-                            // 页面到期时间更新 
                         }else{
                             this.notify("开通会员失败",'error')
                         }
@@ -208,7 +224,6 @@ export default {
                     .catch(err =>{
                         this.notify("开通会员失败",'error')
                     })
-                // this.notify("开通会员成功",'success');
             } else if ((this.flag1 == false) && this.flag2) {
                 this.notify("请选择套餐",'warning');
             } else if (this.flag1 && (this.flag2 == false)) {
@@ -216,8 +231,6 @@ export default {
             } else if ((this.flag1 == false) && (this.flag2 == false)) {
                 this.notify("请选择套餐与支付方式",'warning');
             }
-            // console.log(this.flag1);
-            
         },
     }
 };
