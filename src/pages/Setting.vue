@@ -26,7 +26,7 @@ import Upload from "../components/Upload"
     data(){
       return {
         settingList:[
-          {name:"个人信息",path: 'Infor'},
+          {name:"个人信息",path: 'Info'},
           {name:"修改头像",path: 'Upload'},
         ],
         activeName: '个人信息',
@@ -35,7 +35,7 @@ import Upload from "../components/Upload"
     },
     methods:{
       handleClick(item){
-        this.activeName =item.name;
+        this.activeName = item.name;
         this.componentSrc = item.path;
       }
     }
