@@ -20,7 +20,7 @@
   <script>
   import {mixin} from '../mixins';
   import {mapGetters} from 'vuex';
-  import {getUserOfId} from '../api/index';
+  import {getUserOfId,flagVip} from '../api/index';
   import VipContent from "../components/VipContent";
   export default {
     name: "vip",
@@ -50,16 +50,21 @@
         .then(res =>{
             this.avator = res.avator;
             this.username = res.username;
-            this.duedate = res.duedate;
-            this.showDuedate();
           })
           .catch(err =>{
             console.log(err);
           })
+        flagVip(userId).then(res =>{//查询会员，和展示到期时间。
+          if(res.code == 1) {
+            this.duedate = res.vipMsg.endTime;
+            this.showDuedate(this.duedate);
+          }
+            
+        })
       },
-      showDuedate() {
-        if(this.duedate){
-        document.querySelector('.due-date').style.display = 'block';
+      showDuedate(duedate) {
+        if(duedate){
+          document.querySelector('.due-date').style.display = 'block';
       } else {
         document.querySelector('.due-info').style.display = 'block';
       }
