@@ -96,6 +96,9 @@ export const getAllComment = (type, id) => {
     }
 }
 
+
 // ====================开通会员======================
 // 提交开通会员信息
+
 export const setVip = (params) => post(`/vip/add`, params);
+
