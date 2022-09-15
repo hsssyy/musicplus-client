@@ -54,20 +54,20 @@
           .catch(err =>{
             console.log(err);
           })
-        flagVip(userId).then(res =>{//查询会员，和展示到期时间。
+        flagVip(userId).then(res =>{ //查询会员，和展示到期时间。
           if(res.code == 1) {
             this.duedate = res.vipMsg.endTime;
-            this.showDuedate(this.duedate);
+            this.showDuedate();
+          } else {
+            this.showMsg();
           }
-            
         })
       },
-      showDuedate(duedate) {
-        if(duedate){
+      showDuedate() {
           document.querySelector('.due-date').style.display = 'block';
-      } else {
+      },
+      showMsg() {
         document.querySelector('.due-info').style.display = 'block';
-      }
       }
     },
   };

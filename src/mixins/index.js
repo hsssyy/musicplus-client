@@ -111,18 +111,5 @@ export const mixin = {
         attachBirth(val) {
             return val.substr(0, 10);
         },
-
-        // 日期转换
-        // countDown(time) {
-        //     var d = parseInt(times / 60 / 60 / 24); // 天
-        //     d = d < 10 ? '0' + d : d;
-        //     var h = parseInt(times / 60 / 60 % 24); // 时
-        //     h = h < 10 ? '0' + h : h;
-        //     var m = parseInt(times / 60 % 60); // 分
-        //     m = m < 10 ? '0' + m : m;
-        //     var s = parseInt(times % 60); // 当前的秒
-        //     s = s < 10 ? '0' + s : s;
-        //     return d + '天' + h + '时' + m + '分' + s + '秒';
-        // }
     }
 }

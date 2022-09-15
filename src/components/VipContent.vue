@@ -63,8 +63,7 @@
   <script>
 import { mixin } from "../mixins";
 import {mapGetters} from 'vuex';
-import {setVip} from '../api/index';
-import {getUserOfId} from '../api/index';
+import {setVip,flagVip} from '../api/index';
 export default {
     name: "vip-content",
     mixins: [mixin],
@@ -172,40 +171,55 @@ export default {
             e.stopPropagation();
             if (this.flag1 && this.flag2) { //套餐与支付方都选择了
                 // ----------根据用户id查询到期时间duedate----------
-                getUserOfId(this.userId)
-                    .then(res => {
-                        this.duedate = res.duedate;
+                flagVip(this.userId)
+                    .then(res =>{
+                        if(res.code == 1) {
+                            this.duedate = res.vipMsg.endTime;
+                        } else {
+                            this.duedate = '';
+                        }
                     })
                     .catch( err=> {
                         this.notify("出错了","error");
                     })
-                //--------------开通会员时间 yyyy-mm-dd--------------
-                let nowTime = new Date();        // 当前系统时间
-                let y1 = nowTime.getFullYear();  //年
-                let m1 = nowTime.getMonth() + 1; //月
-                m1 = m1 < 10 ? '0' + m1 : m1;
-                let d1 = nowTime.getDate();      //日
-                d1 = d1 < 10 ? '0' + d1 : d1;
-                let openTime = y1 + '-' + m1 + '-' + d1;
-                //----------------计算到期时间-----------------------
-                var dueMs = +new Date(this.duedate);     // 到期时间转化为毫秒数  dueMs
-                let timeMs = +new Date();                // 开通会员时间的总毫秒数 timeMs
-                let monMs = this.selectMonth * 31 * 24 * 60 * 60 * 1000; //月数*31天*24小时*60分钟*60秒*1000毫秒
-                if (!dueMs || dueMs < timeMs) { // 到期时间为空 或者 到期时间小于开通时间（用毫秒判断）
-                    // 到期时间 = 开通时间+开通的月数（用毫秒计算）
-                    dueMs = timeMs + monMs;
-                } else if (dueMs >= timeMs) { // 到期时间 大于等于 开通会员时间 
-                    // 到期时间 = 数据库获取到的到期时间+开通的月数（用毫秒计算）
-                    dueMs = dueMs + monMs;
+                //-------------- 开通会员时间 ------------------
+                let openTime = new Date().toLocaleString(); // 格式如 2022/9/15 16:29:06
+                //---------------计算到期时间-------------------
+                let days = this.selectMonth * 31; // 转化为天数
+                if ((this.duedate == '') || (this.duedate < openTime)) { // 如果到期时间为空 或者 到期时间小于开通时间
+                    // 到期时间 = 开通时间+开通的天数
+                    this.duedate = dateChange(days, openTime);
+                } else if ((this.duedate != '') || (this.duedate >= openTime)) { // 到期时间 大于等于 开通会员时间 
+                    // 到期时间 = 获取的到期时间+开通的天数
+                    this.duedate = dateChange(days, this.duedate);
                 }
-                //----------到期时间转化为年月日格式yyyy-mm-dd---------
-                let due = new Date(dueMs);
-                let y2 = due.getFullYear();  //年
-                let m2 = due.getMonth() + 1; //月
-                m2 = m2 < 10 ? '0' + m2 : m2;
-                let d2 = due.getDate();      //日
-                d2 = d2 < 10 ? '0' + d2 : d2;
-                this.duedate = y2 + '-' + m2 + '-' + d2;
+                //------------------------------------------------------
+                function dateChange(num = 1, date = false) { //对某个日期date加上num天数得到新日期
+                    if (!date) {
+                        date = new Date(); //没有传入值时,默认是当前日期
+                        var h = date.getHours();
+                        h = h < 10 ? '0' + h : h;
+                        var m = date.getMinutes();
+                        m = m < 10 ? '0' + m : m;
+                        var s = date.getSeconds();
+                        s = s < 10 ? '0' + s : s;
+                        date = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + h + ':' + m + ':' + s;
+                    }
+
+                    date = Date.parse(new Date(date)) / 1000; //转换为时间戳
+
+                    date += (86400) * num; //修改后的时间戳
+
+                    var newDate = new Date(parseInt(date) * 1000); //转换为时间
+
+                    var h = newDate.getHours();
+                    h = h < 10 ? '0' + h : h;
+                    var m = newDate.getMinutes();
+                    m = m < 10 ? '0' + m : m;
+                    var s = newDate.getSeconds();
+                    s = s < 10 ? '0' + s : s;
+                    return newDate.getFullYear() + '/' + (newDate.getMonth() + 1) + '/' + newDate.getDate() + ' ' + h + ':' + m + ':' + s;
+                }
                 // -----------------------------------------------
                 let params = new URLSearchParams();
                 params.append('userId', this.userId);           //用户id
