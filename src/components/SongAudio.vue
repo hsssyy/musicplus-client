@@ -4,7 +4,7 @@
         ref="player"
         :src="url"
         controls="controls"
-        preload="true"
+        preload="auto"
         @canplay="startPlay"
         @ended="ended"
         @timeupdate="timeupdate"

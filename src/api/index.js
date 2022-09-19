@@ -89,9 +89,9 @@ export const setComment = (params) => post(`/comment/add`, params);
 export const setLike = (params) => post(`/comment/like`, params);
 //返回当前歌单或歌曲的评论列表
 export const getAllComment = (type, id) => {
-    if (type == 0) { //歌曲
+    if (type == 0) { //歌曲评论
         return get(`/comment/commentOfSongId?songId=${id}`);
-    } else { //歌单
+    } else { //歌单评论 type=1
         return get(`/comment/commentOfSongListId?songListId=${id}`);
     }
 }
