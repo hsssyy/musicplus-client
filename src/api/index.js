@@ -19,7 +19,8 @@ export const download = (url) => Axios({
     url: url,
     responseType: 'blob',
 })
-
+//根据歌手id获取歌手信息
+export const getSingerOfId = (id) => get(`singer/singerOfId?id=${id}`);
 
 //============歌曲相关===========
 
@@ -47,6 +48,8 @@ export const getSongListOfLikeTitle = (keywords) => get(`songList/likeTitle?titl
 
 //根据风格模糊查询歌单列表
 export const getSongListOfLikeStyle = (style) => get(`songList/likeStyle?style=${style}`);
+//根据歌单id 查询歌单信息
+export const getSongListInfoById = (id) => get(`songList/getSongListInfoById?id=${id}`)
 
 //============歌单的歌曲相关===========
 //根据歌单id查询歌曲列表    
@@ -80,7 +83,8 @@ export const getCollectOfUserId = (userId) => get(`/collect/collectOfUserId?user
 export const setRank = (params) => post(`/rank/add`, params);
 //获取指定歌单的平均分 
 export const getRankOfSongListId = (songListId) => get(`/rank?songListId=${songListId}`);
-
+//根据用户id 和 歌单id 获取自己的评分
+export const getScore = (userId,songListId) => get(`/rank/scoreByUserIdAndSongListId?userId=${userId}&&songListId=${songListId}`)
 
 //========================评论  ============
 //提交评论 
@@ -95,6 +99,7 @@ export const getAllComment = (type, id) => {
         return get(`/comment/commentOfSongListId?songListId=${id}`);
     }
 }
+
 
 
 // ====================开通会员======================

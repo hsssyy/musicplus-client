@@ -27,7 +27,7 @@
 <script>
 import { mixin } from "../mixins";
 import {mapGetters} from 'vuex';
-import {songOfSongId,songOfSingerId} from '../api/index';
+import {songOfSongId,songOfSingerId,getSingerOfId} from '../api/index';
 import AlbumContent from "../components/AlbumContent";
 export default {
   name: "singer-album",
@@ -39,7 +39,7 @@ export default {
   data(){
       return{
           singerId: '',//前面传来的歌手id
-          singer :{},//当前歌手信息
+          singer:[],//当前歌手信息
           songLists:[],//对当前页面需要展示的歌曲列表
       }
   },
@@ -53,8 +53,9 @@ export default {
   },
   created(){
     this.singerId = this.$route.params.id;
-    this.singer = this.tempList;
+    // this.singer = this.tempList;
     this.getSongOfSingerId();
+    this.getSingerInfoById();
   },
   methods:{
     //根据歌手id查询歌曲
@@ -70,6 +71,15 @@ export default {
         .catch(err =>{
           console.log(err)
         })
+    },
+    //根据歌手id 获取歌曲信息
+    getSingerInfoById(){
+      getSingerOfId(this.singerId)
+      .then(res =>{
+        if(res){
+          this.singer = res;
+        }
+      })
     },
     //根据歌曲id获取歌曲信息
     getRankt(id){

@@ -2,7 +2,7 @@
   <div class="content-list">
     <ul class="section-content">
       <li  class="content-item"  v-for="(item, index) in contentList" :key="index">
-        <div class="kuo" @click ="goAlbum (item,item.name)">
+        <div class="kuo" @click ="goAlbum (item,item.name)"> 
           <img class="item-img" :src="attachImageUrl(item.pic)" />
           <div class="mask">
             <svg class="icon">
@@ -27,6 +27,7 @@ export default {
       if(type){  //歌手
         this.$router.push({path:`singer-album/${item.id}`});
       }else{   //歌单
+      //  alert(type)
         this.$router.push({path:`song-list-album/${item.id}`});
       }
     }

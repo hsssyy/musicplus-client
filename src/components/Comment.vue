@@ -18,7 +18,7 @@
               <div class="popular-msg">
                     <ul>
                         <li class="name">{{userName[index]}}</li>
-                        <li class="time">{{item.createTime}}</li>
+                        <li class="time">{{item.create_time}}</li>
                         <li class="content">{{item.content}}</li>
                     </ul>
               </div>
@@ -99,12 +99,12 @@
             .then(res => {
                this.commentList = res;
                for(let item of res){
-                   this.getUsers(item.id);
+                   this.getUsers(item.user_id);
                }
             })
-                .catch(err => {
-                    this.notify('评论加载失败','error');
-                })
+            .catch(err => {
+                this.notify('评论加载失败','error');
+            })
     },
     //获取用户的头像和昵称
     getUsers(id){

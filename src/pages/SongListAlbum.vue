@@ -1,19 +1,20 @@
 <template>
     <div class = "song-list-album" >
         <div class="album-slide">
+           
             <div class="album-img">
-                <img :src="attachImageUrl(this.songListPic)">
+                <img :src="attachImageUrl(this.songListInfo.pic)">
             </div>
             <div class="album-info">
                 <h2>简介：</h2>
                 <span>
-                    {{tempList.introduction}}
+                    {{this.songListInfo.introduction}}
                 </span>
             </div>
         </div>
         <div class="album-content">
             <div class="album-title">
-                <p>{{tempList.title}}</p>
+                <p>{{this.songListInfo.title}}</p>
             </div>
             <div class="album-score">
                 <div>
@@ -43,7 +44,7 @@
 <script>
 import {mixin} from '../mixins';
 import {mapGetters} from 'vuex';
-import {listSongDetail,songOfSongId,setRank,getRankOfSongListId} from '../api/index';
+import {listSongDetail,songOfSongId,setRank,getRankOfSongListId,getSongListInfoById,getScore} from '../api/index';
 import AlbumContent from "../components/AlbumContent";
 import Comment from "../components/Comment";
 export default{
@@ -59,7 +60,9 @@ export default{
             songListId: '',//前面传来的歌单id
             average: 0,//平均分，默认是0
             rank: 0, //提交评价的分数
-            songListPic: '',
+            songListPic: '',//歌单图片
+            introduction:'',//简介
+            songListInfo:[]
         }
         
     },
@@ -73,9 +76,12 @@ export default{
     },
     created(){
         this.songListId = this.$route.params.id;
-        this.songListPic = this.tempList.pic;
+        this.getSongListInfo();
+        // this.songListPic = this.tempList.pic;
         this.getSongId();
         this.getRank(this.songListId);
+        this.getRankScore();
+        
     },
     methods:{
         //获取当前歌单的歌曲列表
@@ -87,6 +93,16 @@ export default{
                     this.getRankt(item.song_id);//getSongList
                 }
                 this.$store.commit('setListOfSongs',this.songLists)
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+        },
+        //获取该歌单的信息
+        getSongListInfo(){
+            getSongListInfoById(this.songListId)
+            .then(res =>{
+                this.songListInfo = res;
             })
             .catch(err =>{
                 console.log(err);
@@ -107,6 +123,15 @@ export default{
             getRankOfSongListId(id)
             .then((res)=>{
                 this.average = res/2;
+            })
+        },
+        //根据用户id 和 歌单id 获取自己的评分
+        getRankScore(){
+            getScore(this.userId,this.songListId)
+            .then(res =>{
+                if(res){
+                    this.rank = res.score/2;
+                }
             })
         },
         //提交评分

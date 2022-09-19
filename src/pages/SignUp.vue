@@ -110,7 +110,7 @@ export default {
     SignUp() {
       let _this = this;
       let d = this.registerForm.birth;
-      let datetime = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      let datetime = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+" 00:00:00";
       this.registerForm.birth = datetime;
     
       SignUp(_this.registerForm)

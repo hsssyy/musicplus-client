@@ -26,6 +26,7 @@ export const mixin = {
         attachImageUrl(srcUrl) {
             return srcUrl ? this.$store.state.configure.HOST + srcUrl : this.$store.state.configure.HOST + '/img/songPic/user.jpg';
         },
+        
         //根据歌手名字模糊查询
         getSong() {
             if (!this.$route.query.keywords) {

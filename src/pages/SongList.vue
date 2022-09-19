@@ -49,11 +49,11 @@
           return this.albumDatas;
         }
       },
-    //   mounted(){
-    //     // this.activeName = '全部歌单';
-    //     this.songStyle = songStyle;
-    //     this.getSongList();
-    //   },
+      mounted(){
+        // this.activeName = '全部歌单';
+        this.songStyle = songStyle;
+        this.getSongList();
+      },
       created() {
         this.songStyle = songStyle;
          this.getSongList();
