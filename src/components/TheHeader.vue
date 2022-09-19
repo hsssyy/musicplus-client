@@ -145,6 +145,16 @@ export default {
         this.$store.commit("setLoginIn", false);
         this.$store.commit("setIsActive", false);
         this.$router.go(0);
+        this.$store.commit('setId', '');
+        this.$store.commit('setUrl', '');
+        this.$store.commit('setPicUrl', '');
+        this.$store.commit('setListIndex', '');
+        this.$store.commit('setTitle', '');
+        this.$store.commit('setArtist', '');
+        this.$store.commit('setLyric', '');
+        // if (!this.loginIn) {
+        //   this.$store.commit('setIsActive', false);
+        // }
       } else {
         this.$router.push({ path: path });
       }

@@ -122,28 +122,28 @@ export const mixin = {
                 // 2.判断是否登录
                 if (!this.loginIn) { //未登录，不可以听
                     this.notify("VIP歌曲，请先登录", 'warning');
-                }
-                //已登录，根据用户id判断是不是会员
+                } else if (this.loginIn) { //已登录
+                    // 根据用户id判断是不是会员
+                    function getDuedate(userId, duedate) {
+                        flagVip(userId).then(res => {
+                            if (res.code == 1) {
+                                duedate = res.vipMsg.endTime;
+                            } else {
+                                duedate = '';
+                            }
+                            getdate(duedate);
+                        })
+                    }
+                    getDuedate(this.userId, this.duedate);
 
-                function getDuedate(userId, duedate) {
-                    flagVip(userId).then(res => {
-                        if (res.code == 1) {
-                            duedate = res.vipMsg.endTime;
-                        } else {
-                            duedate = '';
+                    function getdate(duedate) {
+                        let dueMs = +new Date(duedate); // 到期时间转为毫秒
+                        let openMs = +new Date(); // 当前时间的毫秒数
+                        if ((!dueMs) || (dueMs < openMs)) { // 不是会员
+                            _this.notify("VIP歌曲，请先开通会员", 'warning');
+                        } else { // 是会员
+                            play();
                         }
-                        getdate(duedate);
-                    })
-                }
-                getDuedate(this.userId, this.duedate);
-
-                function getdate(duedate) {
-                    let dueMs = +new Date(duedate); // 到期时间转为毫秒
-                    let openMs = +new Date(); // 当前时间的毫秒数
-                    if ((!dueMs) || (dueMs < openMs)) { // 不是会员
-                        _this.notify("VIP歌曲，请先开通会员", 'warning');
-                    } else { // 是会员
-                        play();
                     }
                 }
             } else if (setVip === 0) {

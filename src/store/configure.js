@@ -5,8 +5,8 @@ const configure = ({
         showAside: false, // 是否显示播放中的歌曲列表 TheAside.vue 组件
         loginIn: false, // 用户是否已登录
         isActive: false, // 当前歌曲是否已收藏
-        // isMealActive: false,
-        // isPayActive: false,
+        isMealActive: false,
+        isPayActive: false,
     },
     getters: { // 获取方式
         activeName: state => {
@@ -37,20 +37,20 @@ const configure = ({
             }
             return isActive
         },
-        // isMealActive: state => {
-        //     let isMealActive = state.isMealActive
-        //     if (!isMealActive) {
-        //         isMealActive = JSON.parse(window.sessionStorage.getItem('isMealActive'))
-        //     }
-        //     return isMealActive
-        // },
-        // isPayActive: state => {
-        //     let isPayActive = state.isPayActive
-        //     if (!isPayActive) {
-        //         isPayActive = JSON.parse(window.sessionStorage.getItem('isPayActive'))
-        //     }
-        //     return isMealActive
-        // },
+        isMealActive: state => {
+            let isMealActive = state.isMealActive
+            if (!isMealActive) {
+                isMealActive = JSON.parse(window.sessionStorage.getItem('isMealActive'))
+            }
+            return isMealActive
+        },
+        isPayActive: state => {
+            let isPayActive = state.isPayActive
+            if (!isPayActive) {
+                isPayActive = JSON.parse(window.sessionStorage.getItem('isPayActive'))
+            }
+            return isMealActive
+        },
     },
     mutations: { // 设置
         setActiveName: (state, activeName) => {
@@ -71,14 +71,14 @@ const configure = ({
             state.isActive = isActive
             window.sessionStorage.setItem('isActive', JSON.stringify(isActive))
         },
-        // setIsMealActive: (state, isMealActive) => {
-        //     state.isMealActive = isMealActive
-        //     window.sessionStorage.setItem('isMealActive', JSON.stringify(isMealActive))
-        // },
-        // setIsPayActive: (state, isPayActive) => {
-        //     state.isPayActive = isPayActive
-        //     window.sessionStorage.setItem('isPayActive', JSON.stringify(isPayActive))
-        // },
+        setIsMealActive: (state, isMealActive) => {
+            state.isMealActive = isMealActive
+            window.sessionStorage.setItem('isMealActive', JSON.stringify(isMealActive))
+        },
+        setIsPayActive: (state, isPayActive) => {
+            state.isPayActive = isPayActive
+            window.sessionStorage.setItem('isPayActive', JSON.stringify(isPayActive))
+        },
     }
 })
 export default configure

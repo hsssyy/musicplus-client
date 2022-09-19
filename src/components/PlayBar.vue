@@ -101,7 +101,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { download,setCollect,getCollectOfUserId } from "../api/index";
+import { download,setCollect,getCollectOfUserId, loginIn,flagVip } from "../api/index";
 export default {
   name: "play-bar",
 
@@ -115,6 +115,8 @@ export default {
       tag: false, // 拖拽开始结束的标志，当开始拖拽，它的值就会变成true
       volume: 20, // 音量默认20
       toggle: true, // 显示隐藏播放页面
+      duedate: '', //会员到期时间
+      lastIndex: 0,
     };
   },
   computed: {
@@ -290,6 +292,17 @@ export default {
     },
     //上一首
     prev() {
+      // if (this.listIndex == 0) {
+      //   this.lastIndex = this.listIndex + this.listOfSongs.length;
+      // }
+      // if ((this.listOfSongs[this.lastIndex-1].setVip == 1) && (!this.loginIn)) {
+      //   this.notify("VIP歌曲，请先登录", 'warning');
+      //   this.$store.commit('setListIndex', '');
+      // }else if ((this.listOfSongs[this.listIndex-1].setVip == 1) && (!this.loginIn)) {
+      //   this.notify("VIP歌曲，请先登录", 'warning');
+      //   this.$store.commit('setListIndex', '');
+      // }
+
       if (this.listIndex != -1 && this.listOfSongs.length > 1) {
         //当前处于不可能状态或者只有一首音乐的时候不执行
         if (this.listIndex > 0) {
@@ -304,6 +317,20 @@ export default {
     },
     //下一首
     next() {
+      // console.log(this.listIndex);
+      // console.log(this.listOfSongs[this.listIndex+1]);
+      // if (this.listIndex == this.listOfSongs.length-1) {
+      //   this.lastIndex = 0;
+      // }
+      // if ((this.listOfSongs[this.lastIndex+1].setVip == 1) && (!this.loginIn)) {
+      //   this.notify("VIP歌曲，请先登录", 'warning');
+      //   this.$store.commit('setListIndex', '');
+      // }
+      // else if ((this.listOfSongs[this.listIndex+1].setVip == 1) && (!this.loginIn)) {
+      //   this.notify("VIP歌曲，请先登录", 'warning');
+      //   this.$store.commit('setListIndex', '');
+      // }
+
       if (this.listIndex != -1 && this.listOfSongs.length > 1) {
         //当前处于不可能状态或者只有一首音乐的时候不执行
         if (this.listIndex < this.listOfSongs.length - 1) {
@@ -343,7 +370,7 @@ export default {
                 getCollectOfUserId(this.userId)
                     .then(res =>{
                         for(let item of res){
-                            if(item.songId == id){
+                            if(item.songId == this.id){
                                 this.$store.commit('setIsActive',true);
                                 break;
                             }
