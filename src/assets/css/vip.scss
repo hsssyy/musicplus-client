@@ -2,15 +2,16 @@
 .vip {
     margin-top: $header-height;
     padding-top: 150px;
-    background-color: $theme-background-color;
+    background-color: #f5f5f5;
     &::before {
         /*背景*/
         content: "";
-        background-color: $theme-color;
+        background-color: #72d1a9;
+        box-shadow: 0px 0px 243px 320px #72d1a9;
         position: absolute;
         top: 0;
         width: 100%;
-        height: $header-height + 120px;
+        height: 125px;
         opacity: 0.9;
     }
 }

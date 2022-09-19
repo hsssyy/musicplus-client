@@ -1,11 +1,11 @@
 const song = ({
     state: {
         listOfSongs: [], //当前歌曲列表
-        isPlay: false,//是否播放中
-        url: '',//歌曲地址
-        id: '',//歌曲id
-        playButtonUrl: "#icon-bofang", //播放状态的图标
-        duration: 0,//音乐时长
+        isPlay: false, //是否播放中
+        url: '', //歌曲地址
+        id: '', //歌曲id
+        playButtonUrl: "", //播放状态的图标
+        duration: 0, //音乐时长
         curTime: 0, //当前音乐的播放位置
         changeTime: 0, // 指定播放时刻
         title: "", // 歌名
