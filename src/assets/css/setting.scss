@@ -19,6 +19,7 @@
     box-sizing: border-box;
     width: 200px;
     height: 550px;
+    color: #235642;
     .settingsMainHeader {
         height: 60px;
         line-height: 60px;
@@ -40,17 +41,17 @@
         margin-right: 2px;
         cursor: pointer;
         &:hover {
-            background-color: $color-blue-active;
+            background-color: #a9edd8;
             color: $color-white;
         }
         &:active {
-            background-color: $color-blue-shallow;
+            background-color: #cef2e7;
         }
     }
 }
 
 .activeColor {
-    background-color: $color-blue-shallow !important;
+    background-color: #61dcad !important;
     color: $color-white;
 }
 

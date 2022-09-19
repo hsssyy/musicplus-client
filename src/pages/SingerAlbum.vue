@@ -15,11 +15,10 @@
           <h2>{{singer.name}}</h2>
           <span>{{singer.introduction}}</span>
         </div>
-        <div class="content">
-          <album-content :songList="listOfSongs">
-            <template slot="title">歌单</template>
+        <div class="songs-body">
+          <album-content :songList="songLists">
+            <template  slot = "title">歌单</template>  
           </album-content>
-          
         </div>
       </div>
 
@@ -28,19 +27,20 @@
 <script>
 import { mixin } from "../mixins";
 import {mapGetters} from 'vuex';
-import {songOfSingerId} from '../api/index';
+import {songOfSongId,songOfSingerId} from '../api/index';
 import AlbumContent from "../components/AlbumContent";
 export default {
   name: "singer-album",
   mixins: [mixin],
   components:{
     AlbumContent,
-    Comment
+    // Comment
   },
   data(){
       return{
           singerId: '',//前面传来的歌手id
           singer :{},//当前歌手信息
+          songLists:[],//对当前页面需要展示的歌曲列表
       }
   },
   computed:{
@@ -61,11 +61,25 @@ export default {
     getSongOfSingerId(){
       songOfSingerId(this.singerId)
         .then(res =>{
-          this.$store.commit('setListOfSongs',res);
+          for(let item of res){
+            console.log(item);
+            this.getRankt(item.id); //歌曲id
+          }
+          this.$store.commit('setListOfSongs',this.songLists);
         })
         .catch(err =>{
           console.log(err)
         })
+    },
+    //根据歌曲id获取歌曲信息
+    getRankt(id){
+      songOfSongId(id)
+          .then(res =>{
+              this.songLists.push(res);
+          })
+          .catch(err =>{
+              console.log(err);
+          })
     },
     //获取性别
     attachSex(value){

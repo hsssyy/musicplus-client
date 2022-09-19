@@ -57,7 +57,13 @@
         flagVip(userId).then(res =>{ //查询会员，和展示到期时间。
           if(res.code == 1) {
             this.duedate = res.vipMsg.endTime;
-            this.showDuedate();
+            let dueMs = +new Date(this.duedate); // 到期时间转为毫秒
+            let openMs = +new Date();   // 当前时间的毫秒数
+            if (dueMs < openMs) { //不是会员
+              this.showMsg();
+            } else if (dueMs >= openMs) { //是会员
+              this.showDuedate();
+            }
           } else {
             this.showMsg();
           }

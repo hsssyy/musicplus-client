@@ -2,9 +2,9 @@
     <div>
       <div class="comment">
         <h2>评论</h2>
-        <div class="comment-img">
+        <!-- <div class="comment-img">
             <img :src = "attachImageUrl(avator)">
-        </div>
+        </div> -->
         <el-input class="comment-input" type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input>
         <el-button type="primary" class="sub-btn" @click="postComment">评论</el-button>
       </div>
