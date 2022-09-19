@@ -1,15 +1,16 @@
 @import "var.scss";
 @import "global.scss";
-
 .login-logo {
-  background-color: $color-blue-light;
-  height: 100vh;
-  width: 50vw;
-  min-width: 650px;
-  overflow: hidden;
-  @include layout(center, center);
-  .icon {
-    @include icon(6.5em, $color-blue-dark);
-    transform: rotate(-30deg);
-  }
+    // background-color: #72d1a9;
+    background-image: radial-gradient(#49c692, #deefe3);
+    height: 140vh;
+    width: 100%;
+    min-width: 650px;
+    overflow: hidden;
+    @include layout(center, center);
+    // .icon {
+    //     top: 15px;
+    //     @include icon(6.5em, #92dcbd);
+    //     transform: rotate(-30deg);
+    // }
 }

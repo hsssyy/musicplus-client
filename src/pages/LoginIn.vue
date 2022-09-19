@@ -1,8 +1,8 @@
 <template>
   <div>
     <LoginLogo />
-    <div class="signUp">
-      <div class="signUp-head">
+    <div class="login">
+      <div class="login-head">
         <span>帐号登录</span>
       </div>
       <el-form :model="loginForm" ref="loginForm" label-width="70px" class="demo-ruleForm" :rules="rules">
@@ -90,5 +90,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/sign-up.scss";
+@import "../assets/css/login-in.scss";
 </style>

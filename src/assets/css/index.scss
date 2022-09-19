@@ -1,46 +1,102 @@
-@import "var.scss";
-* {
-    padding: 0;
-    margin: 0;
-}
-
-ul,
-li {
-    list-style: none;
-    display: inline-block;
-}
-
-html {
-    min-width: 1200px;
-    font-size: 14px;
-}
-
-div {
-    box-sizing: content-box;
-}
-
-
-/*表单*/
-
-.el-select-dropdown__item {
-    display: block !important;
-}
-
-
-/*轮播图*/
-
-.el-scrollbar__view,
-.el-select-dropdown__list {
-    width: 100% !important;
-    text-align: center;
-}
-
-.el-carousel__indicators,
-.el-carousel__indicators--outside {
-    display: inline-block;
-    margin-left: 500px !important;
-}
-
-.el-slider__runway {
-    background-color: $color-blue !important;
-}
+    @import "var.scss";
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    
+    ul,
+    li {
+        list-style: none;
+        display: inline-block;
+    }
+    
+    html {
+        min-width: 1200px;
+        font-size: 14px;
+    }
+    
+    div {
+        box-sizing: content-box;
+    }
+    /*表单*/
+    
+    .el-select-dropdown__item {
+        display: block !important;
+    }
+    /*轮播图*/
+    
+    .el-scrollbar__view,
+    .el-select-dropdown__list {
+        width: 100% !important;
+        text-align: center;
+    }
+    
+    .el-carousel__indicators,
+    .el-carousel__indicators--outside {
+        display: inline-block;
+        margin-left: 500px !important;
+    }
+    
+    .el-slider__runway {
+        background-color: #bae9d5 !important;
+    }
+    
+    .el-slider__bar {
+        background-color: #5ad6a2 !important;
+    }
+    
+    .el-slider__button {
+        border: 2px solid #5ad6a2 !important;
+    }
+    
+    .el-pagination.is-background .el-pager li:not(.disabled).active {
+        background-color: $theme-color !important;
+        color: #FFF !important;
+    }
+    
+    .el-pager li:hover {
+        color: $theme-color !important;
+    }
+    
+    .el-radio__input.is-checked .el-radio__inner {
+        border-color: #5ad6a2 !important;
+        background: #5ad6a2 !important;
+    }
+    
+    .el-radio__input.is-checked+.el-radio__label {
+        color: #5ad6a2 !important;
+    }
+    
+    .el-button--primary {
+        background-color: #5ad6a2 !important;
+        border-color: #5ad6a2 !important;
+    }
+    
+    .el-form-item {
+        margin-bottom: 15px !important;
+    }
+    
+    .el-input__inner:focus {
+        outline: none !important;
+        border: 1px solid #32ca99c2 !important;
+    }
+    
+    .el-date-table td.current:not(.disabled) span {
+        background-color: #5ad6a2 !important;
+    }
+    
+    .el-date-table td.today span {
+        color: #5ad6a2 !important;
+    }
+    
+    .el-date-table td.available:hover {
+        color: #5ad6a2 !important;
+    }
+    
+    .el-picker-panel__icon-btn:hover {
+        color: #5ad6a2 !important;
+    }
+    
+    .el-date-picker__header-label:hover {
+        color: #5ad6a2 !important;
+    }

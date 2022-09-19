@@ -170,74 +170,84 @@ export default {
         confirmPay(e) { // 确认支付
             e.stopPropagation();
             if (this.flag1 && this.flag2) { //套餐与支付方都选择了
+                let _this = this;
                 // ----------根据用户id查询到期时间duedate----------
-                flagVip(this.userId)
-                    .then(res =>{
+                function getDuedate(userId, selectMonth, payAmount, duedate) {
+                    flagVip(userId).then(res =>{
                         if(res.code == 1) {
-                            this.duedate = res.vipMsg.endTime;
+                            duedate = res.vipMsg.endTime;
                         } else {
-                            this.duedate = '';
+                            duedate = '';
                         }
-                    })
-                    .catch( err=> {
-                        this.notify("出错了","error");
-                    })
-                //-------------- 开通会员时间 ------------------
-                let openTime = new Date().toLocaleString(); // 格式如 2022/9/15 16:29:06
-                //---------------计算到期时间-------------------
-                let days = this.selectMonth * 31; // 转化为天数
-                if ((this.duedate == '') || (this.duedate < openTime)) { // 如果到期时间为空 或者 到期时间小于开通时间
-                    // 到期时间 = 开通时间+开通的天数
-                    this.duedate = dateChange(days, openTime);
-                } else if ((this.duedate != '') || (this.duedate >= openTime)) { // 到期时间 大于等于 开通会员时间 
-                    // 到期时间 = 获取的到期时间+开通的天数
-                    this.duedate = dateChange(days, this.duedate);
-                }
-                //------------------------------------------------------
-                function dateChange(num = 1, date = false) { //对某个日期date加上num天数得到新日期
-                    if (!date) {
-                        date = new Date(); //没有传入值时,默认是当前日期
-                        var h = date.getHours();
-                        h = h < 10 ? '0' + h : h;
-                        var m = date.getMinutes();
-                        m = m < 10 ? '0' + m : m;
-                        var s = date.getSeconds();
-                        s = s < 10 ? '0' + s : s;
-                        date = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + h + ':' + m + ':' + s;
-                    }
-
-                    date = Date.parse(new Date(date)) / 1000; //转换为时间戳
-
-                    date += (86400) * num; //修改后的时间戳
-
-                    var newDate = new Date(parseInt(date) * 1000); //转换为时间
-
-                    var h = newDate.getHours();
-                    h = h < 10 ? '0' + h : h;
-                    var m = newDate.getMinutes();
-                    m = m < 10 ? '0' + m : m;
-                    var s = newDate.getSeconds();
-                    s = s < 10 ? '0' + s : s;
-                    return newDate.getFullYear() + '/' + (newDate.getMonth() + 1) + '/' + newDate.getDate() + ' ' + h + ':' + m + ':' + s;
-                }
-                // -----------------------------------------------
-                let params = new URLSearchParams();
-                params.append('userId', this.userId);           //用户id
-                params.append('selectMonth', this.selectMonth); //开通的月数
-                params.append('payAmount', this.payAmount);     //支付金额
-                params.append('openTime', openTime);            //开通时间
-                params.append('duedate', this.duedate);         //到期时间
-                setVip(params)
-                    .then(res =>{
-                        if(res.code==1){
-                            this.notify("开通会员成功",'success')
-                        }else{
-                            this.notify("开通会员失败",'error')
-                        }
+                        getdate(userId, selectMonth, payAmount, duedate);
                     })
                     .catch(err =>{
-                        this.notify("开通会员失败",'error')
+                            _this.notify("出错咯~",'error')
                     })
+                }
+                getDuedate(this.userId, this.selectMonth, this.payAmount, this.duedate);
+                function getdate(userId, selectMonth, payAmount, duedate){
+                    let dueMs = +new Date(duedate); // 到期时间转为毫秒
+                    //-------------- 开通会员时间 ------------------
+                    let openTime = new Date().toLocaleString(); // 格式如 2022/9/15 16:29:06
+                    let openMs = +new Date();   // 开通时间的毫秒数
+                    //---------------计算到期时间-------------------
+                    let days = selectMonth * 31; // 转化为天数
+
+                    if ((!dueMs) || (dueMs < openMs)) { // 如果到期时间为空 或者 到期时间小于开通时间——>不是会员
+                        // 到期时间 = 开通时间+开通的天数
+                        duedate = dateChange(days, openTime);
+                    } else if (dueMs >= openMs) { // 到期时间 大于等于 开通会员时间 ——>是会员
+                        // 到期时间 = 获取的到期时间+开通的天数
+                        duedate = dateChange(days, duedate);
+                    }
+                    //------------------------------------------------------
+                    function dateChange(num = 1, date = false) { //对某个日期date加上num天数得到新日期
+                        if (!date) {
+                            date = new Date(); //没有传入值时,默认是当前日期
+                            var h = date.getHours();
+                            h = h < 10 ? '0' + h : h;
+                            var m = date.getMinutes();
+                            m = m < 10 ? '0' + m : m;
+                            var s = date.getSeconds();
+                            s = s < 10 ? '0' + s : s;
+                            date = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + h + ':' + m + ':' + s;
+                        }
+
+                        date = Date.parse(new Date(date)) / 1000; //转换为时间戳
+
+                        date += (86400) * num; //修改后的时间戳
+
+                        var newDate = new Date(parseInt(date) * 1000); //转换为时间
+
+                        var h = newDate.getHours();
+                        h = h < 10 ? '0' + h : h;
+                        var m = newDate.getMinutes();
+                        m = m < 10 ? '0' + m : m;
+                        var s = newDate.getSeconds();
+                        s = s < 10 ? '0' + s : s;
+                        return newDate.getFullYear() + '/' + (newDate.getMonth() + 1) + '/' + newDate.getDate() + ' ' + h + ':' + m + ':' + s;
+                    }
+                    // -----------------------------------------------
+                    let params = new URLSearchParams();
+                    params.append('userId', userId);           //用户id
+                    params.append('selectMonth', selectMonth); //开通的月数
+                    params.append('payAmount', payAmount);     //支付金额
+                    params.append('openTime', openTime);            //开通时间
+                    params.append('duedate', duedate);         //到期时间
+                    setVip(params)
+                        .then(res =>{
+                            if(res.code==1){
+                                _this.notify("开通会员成功",'success')
+                            }else{
+                                _this.notify("开通会员失败",'error')
+                            }
+                        })
+                        .catch(err =>{
+                            _this.notify("开通会员失败",'error')
+                        })
+                }
+                
             } else if ((this.flag1 == false) && this.flag2) {
                 this.notify("请选择套餐",'warning');
             } else if (this.flag1 && (this.flag2 == false)) {

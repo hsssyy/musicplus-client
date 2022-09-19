@@ -37,22 +37,22 @@ export default {
     this.lyr = this.lyric; //从缓存获取的
   },
   watch: {
-    id: function () {
+    id: function () { //歌曲id变化时，歌词也变化
       this.lyr = this.parseLyric(this.listOfSongs[this.listIndex].lyric); //从数据库获取的
     },
     curTime: function () {
       if (this.lyr.length > 0) {
         for (let i = 0; i < this.lyr.length; i++) {
-          if (this.curTime >= this.lyr[i][0]) {
-            for (let j = 0; j < this.lyr.length; j++) {
+          if (this.curTime >= this.lyr[i][0]) {  //当前歌曲时间>=数组取出来的时间
+            for (let j = 0; j < this.lyr.length; j++) {//经过的歌词为普通黑色
               document.querySelectorAll(".has-lyric li")[j].style.color =
-                "#000";
+                "#235642";
               document.querySelectorAll(".has-lyric li")[j].style.fontSize =
                 "15px";
             }
             if (i >= 0) {
               document.querySelectorAll(".has-lyric li")[i].style.color =
-                "#95d2f6";
+                "#5ad6a2";
               document.querySelectorAll(".has-lyric li")[i].style.fontSize =
                 "25px";
             }

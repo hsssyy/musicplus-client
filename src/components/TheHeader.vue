@@ -1,10 +1,11 @@
 <template>
   <div class="the-header">
     <div class="header-logo" @click="goHome">
-      <svg class="icon">
+      <!-- <svg class="icon">
         <use xlink:href="#icon-erji"></use>
-      </svg>
-      <span>music</span>
+      </svg> -->
+      <span class="logo1">Yep</span>
+      <span class="logo2">Music</span>
     </div>
     <ul class="navbar">
       <!-- 循环遍历导航栏navMsg 放到data里面 -->
@@ -125,7 +126,6 @@ export default {
         this.$store.commit("setActiveName", name);
         this.$router.push({ path: path });
       }
-      
     },
     goSearch() {
       this.$router.push({

@@ -2,7 +2,7 @@
     <div class = "song-list-album" >
         <div class="album-slide">
             <div class="album-img">
-                <img :src="attachImageUrl(tempList.pic)">
+                <img :src="attachImageUrl(this.songListPic)">
             </div>
             <div class="album-info">
                 <h2>简介：</h2>
@@ -59,6 +59,7 @@ export default{
             songListId: '',//前面传来的歌单id
             average: 0,//平均分，默认是0
             rank: 0, //提交评价的分数
+            songListPic: '',
         }
         
     },
@@ -72,6 +73,7 @@ export default{
     },
     created(){
         this.songListId = this.$route.params.id;
+        this.songListPic = this.tempList.pic;
         this.getSongId();
         this.getRank(this.songListId);
     },
@@ -81,6 +83,7 @@ export default{
             listSongDetail(this.songListId)
             .then(res =>{
                 for(let item of res){
+                    console.log(item);
                     this.getRankt(item.song_id);//getSongList
                 }
                 this.$store.commit('setListOfSongs',this.songLists)

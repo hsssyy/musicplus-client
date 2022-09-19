@@ -1,8 +1,8 @@
 <template>
   <div class="login-logo">
-    <svg class="icon">
+    <!-- <svg class="icon">
       <use xlink:href="#icon-erji"></use>
-    </svg>
+    </svg> -->
   </div>
 </template>
 <script>
