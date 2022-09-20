@@ -128,10 +128,13 @@ export default {
       }
     },
     goSearch() {
+      // alert("点击了搜索");
       this.$router.push({
         path: "/search",
         query: { keywords: this.keywords },
       });
+      
+      // window.location.reload();
     },
     attachImageUrl(srcUrl) {
       // return srcUrl

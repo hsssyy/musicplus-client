@@ -102,9 +102,10 @@
 <script>
 import { mapGetters } from "vuex";
 import { download,setCollect,getCollectOfUserId, loginIn,flagVip } from "../api/index";
+import { mixin } from "../mixins";
 export default {
   name: "play-bar",
-
+  mixins: [mixin],
   data() {
     return {
       nowTime: "00:00", //当前播放进度的时间
@@ -137,6 +138,8 @@ export default {
       'loginIn',//用户是否已登录
       "userId",//当前登录用户的id
       'isActive',//当前播放的歌曲是否已收藏
+
+
     ]),
   },
   watch: { //监控值的变化（也可以写到methods里面）
@@ -292,17 +295,6 @@ export default {
     },
     //上一首
     prev() {
-      // if (this.listIndex == 0) {
-      //   this.lastIndex = this.listIndex + this.listOfSongs.length;
-      // }
-      // if ((this.listOfSongs[this.lastIndex-1].setVip == 1) && (!this.loginIn)) {
-      //   this.notify("VIP歌曲，请先登录", 'warning');
-      //   this.$store.commit('setListIndex', '');
-      // }else if ((this.listOfSongs[this.listIndex-1].setVip == 1) && (!this.loginIn)) {
-      //   this.notify("VIP歌曲，请先登录", 'warning');
-      //   this.$store.commit('setListIndex', '');
-      // }
-
       if (this.listIndex != -1 && this.listOfSongs.length > 1) {
         //当前处于不可能状态或者只有一首音乐的时候不执行
         if (this.listIndex > 0) {
@@ -312,35 +304,34 @@ export default {
           //第一首，
           this.$store.commit("setListIndex", this.listOfSongs.length - 1); //倒数第一首
         }
-        this.toplay(this.listOfSongs[this.listIndex].url);
+        if(this.listOfSongs[this.listIndex].setVip==1){//是会员歌曲
+          if(this.SongOfVip()){
+            this.toplay(this.listOfSongs[this.listIndex].url);
+          }
+        }else{//不是会员歌曲
+          this.toplay(this.listOfSongs[this.listIndex].url);
+        }
       }
     },
     //下一首
-    next() {
-      // console.log(this.listIndex);
-      // console.log(this.listOfSongs[this.listIndex+1]);
-      // if (this.listIndex == this.listOfSongs.length-1) {
-      //   this.lastIndex = 0;
-      // }
-      // if ((this.listOfSongs[this.lastIndex+1].setVip == 1) && (!this.loginIn)) {
-      //   this.notify("VIP歌曲，请先登录", 'warning');
-      //   this.$store.commit('setListIndex', '');
-      // }
-      // else if ((this.listOfSongs[this.listIndex+1].setVip == 1) && (!this.loginIn)) {
-      //   this.notify("VIP歌曲，请先登录", 'warning');
-      //   this.$store.commit('setListIndex', '');
-      // }
-
+    next() {  
       if (this.listIndex != -1 && this.listOfSongs.length > 1) {
         //当前处于不可能状态或者只有一首音乐的时候不执行
         if (this.listIndex < this.listOfSongs.length - 1) {
-          this.$store.commit("setListIndex", this.listIndex + 1); //直接返回下一首
+            this.$store.commit("setListIndex", this.listIndex + 1); //直接返回下一首
         } else {
           //第一首，
           this.$store.commit("setListIndex", 0); //切换到第一首
         }
+      if(this.listOfSongs[this.listIndex].setVip==1){//是会员歌曲
+        if(this.SongOfVip()){
+          this.toplay(this.listOfSongs[this.listIndex].url);
+        }
+      }else{//不是会员歌曲
         this.toplay(this.listOfSongs[this.listIndex].url);
       }
+    }
+      
     },
     //播放音乐
     toplay: function (url) {

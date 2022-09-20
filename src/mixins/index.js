@@ -96,7 +96,6 @@ export const mixin = {
         // album-content的点击事件
         gotoplay: function(id, url, pic, index, name, lyric, setVip) {
             let _this = this;
-
             function play() {
                 _this.$store.commit('setId', id);
                 _this.$store.commit('setUrl', _this.$store.state.configure.HOST + url);
@@ -110,7 +109,7 @@ export const mixin = {
                     getCollectOfUserId(_this.userId)
                         .then(res => {
                             for (let item of res) {
-                                if (item.songId == id) {
+                                if (item.song_id == id) {
                                     _this.$store.commit('setIsActive', true);
                                     break;
                                 }
@@ -118,8 +117,9 @@ export const mixin = {
                         })
                 }
             }
+            // this.SongOfVip(setVip,play);//判断歌曲是否是VIP
             // 1.所点击的歌曲是否为vip歌曲
-            if (setVip === 1) { //是vip歌曲
+            if (setVip === 1 ) { //是vip歌曲 ===1
                 // 2.判断是否登录
                 if (!this.loginIn) { //未登录，不可以听
                     this.notify("VIP歌曲，请先登录", 'warning');
@@ -143,13 +143,47 @@ export const mixin = {
                         if ((!dueMs) || (dueMs < openMs)) { // 不是会员
                             _this.notify("VIP歌曲，请先开通会员", 'warning');
                         } else { // 是会员
-                            play();
+                            play();//play()
                         }
                     }
                 }
             } else if (setVip === 0) {
+                // alert("false 没进去判断")
                 play();
             }
+        },
+        //歌曲是VIP 判断用户是否登录/或者是否是会员
+        SongOfVip(){
+            let _this = this;
+                // 1.判断是否登录
+                if (!this.loginIn) { //未登录，不可以听
+                    this.notify("VIP歌曲，请先登录", 'warning');
+                } else if (this.loginIn) { //已登录
+                    // alert("login")
+                    // 根据用户id判断是不是会员
+                    function getDuedate(userId, duedate) {
+                        flagVip(userId).then(res => {
+                            if (res.code == 1) {
+                                duedate = res.vipMsg.endTime;
+                            } else {
+                                duedate = '';
+                            }
+                            getdate(duedate);
+                        })
+                    }
+                    getDuedate(this.userId, this.duedate);
+
+                    function getdate(duedate) {
+                        let dueMs = +new Date(duedate); // 到期时间转为毫秒
+                        let openMs = +new Date(); // 当前时间的毫秒数
+                        if ((!dueMs) || (dueMs < openMs)) { // 不是会员
+                            _this.notify("VIP歌曲，请先开通会员", 'warning');
+                            return false;
+                        } else { // 是会员
+                            return true ;
+                        }
+                    }
+                }
         },
 
         //解析歌词

@@ -27,7 +27,7 @@
           <!-- 歌手 -->
           <span class="item-name">{{ replaceFName(item.name) }}</span>
           <!-- 专辑 -->
-          <span class="item-intro" @click="getVIP(item.setVip)">{{ item.introduction }}</span>
+          <span class="item-intro">{{ item.introduction }}</span>
         </div>
       </li>
     </ul>
