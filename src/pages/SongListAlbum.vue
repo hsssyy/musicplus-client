@@ -138,10 +138,11 @@ export default{
         setRank(){
             if(this.loginIn){
                 let params = new URLSearchParams();
+
                 params.append('songListId',this.songListId);
                 params.append('consumerId',this.userId);
                 params.append('score',(this.rank)*2);
-                setRank(params)
+                setRank(params) 
                     .then(res =>{
                         if(res){
                             this.notify("评分成功",'success')
@@ -152,7 +153,9 @@ export default{
                     })
                     .catch(err =>{
                         this.notify("您已经评价过啦",'error')
+                        window.location.reload();
                     })
+                    
             }else{
                 this.rank = null;
                 this.notify('请先登录','warning');

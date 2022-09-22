@@ -97,6 +97,8 @@ export default {
         birth: "", //生日
         introduction: "", //签名
         location: "", //地区
+        avator: "/avatorImages/user.jpg"  //默认图片
+
       },
       cities: [], //所有的地区---省
       rules: {}, //表单提交的规则

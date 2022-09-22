@@ -85,10 +85,12 @@
         },
         //根据歌单查询对应的歌单
         goSongListOfStyle(style){
-          getSongListOfLikeStyle(style)
+          getSongListOfLikeStyle(style,this.currentPage)
           .then(res =>{
-              this.currentPage = 1;
+               this.currentPage = 1;
               this.albumDatas = res;
+              // this.pageSize = res.size;
+              //   this.total = res.total;
             })
           
         },

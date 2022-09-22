@@ -35,7 +35,7 @@
 </template>
 <script>
 import { mixin } from "../mixins";
-// import {mapGetters} from 'vuex';
+ import {mapGetters} from 'vuex';
 export default {
   name: "album-content",
   mixins: [mixin],

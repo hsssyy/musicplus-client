@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      toggle: "Songs", // 默认歌曲页面
+     toggle: "Songs", // 默认歌曲页面
       currentView: "searchSongs", //当前页面默认searchSongs页面
     };
   },

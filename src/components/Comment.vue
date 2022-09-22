@@ -81,6 +81,7 @@
                             this.notify("评论成功",'success')
                             this.textarea = '';
                             this.getComment();
+                            window.location.reload();//重新加载
                         }else{
                             this.notify("评论失败",'error')
                         }
@@ -105,6 +106,7 @@
             .catch(err => {
                 this.notify('评论加载失败','error');
             })
+            
     },
     //获取用户的头像和昵称
     getUsers(id){

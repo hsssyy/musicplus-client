@@ -46,8 +46,8 @@ export const getAllSongListPage = (pn) => get(`/songList/all?pn=${pn}`);
 //模糊查询 歌单标题包含文字的 歌单
 export const getSongListOfLikeTitle = (keywords) => get(`songList/likeTitle?title=${keywords}`);
 
-//根据风格模糊查询歌单列表
-export const getSongListOfLikeStyle = (style) => get(`songList/likeStyle?style=${style}`);
+//根据风格查询歌单列表
+export const getSongListOfLikeStyle = (style,pn) => get(`songList/likeStyle?style=${style}&&pn=${pn}`);
 //根据歌单id 查询歌单信息
 export const getSongListInfoById = (id) => get(`songList/getSongListInfoById?id=${id}`)
 
